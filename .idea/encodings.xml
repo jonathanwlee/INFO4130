@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/libs/huelocalsdk.jar" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/libs/huesdkresources.jar" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/edu/cornell/jjl/info4130/AccessPointListAdapter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/edu/cornell/jjl/info4130/HueSharedPreferences.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/edu/cornell/jjl/info4130/MyApplicationActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/edu/cornell/jjl/info4130/PHPushlinkActivity.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/edu/cornell/jjl/info4130/PHWizardAlertDialog.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/press_smartbridge.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/pushlink_image.png" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main2.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/home.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/pushlink.xml" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/selectbridge_item.xml" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

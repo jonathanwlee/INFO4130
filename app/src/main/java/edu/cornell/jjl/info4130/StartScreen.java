@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -106,21 +107,10 @@ public class StartScreen extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-
-            }
-            return null;
         }
-    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -161,27 +151,22 @@ public class StartScreen extends AppCompatActivity {
                 View rootView = inflater.inflate(R.layout.fragment_start_screen2, container, false);
                 sleep = (TimePicker) rootView.findViewById(R.id.timePicker2);
 
-                FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
-                fab.setOnClickListener(new View.OnClickListener() {
+            return rootView;
+            }
+
+            else {
+                View rootView = inflater.inflate(R.layout.fragment_start_screen3, container, false);
+
+                Button startButton = (Button) rootView.findViewById(R.id.startButton);
+                startButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
-                        Context context = getActivity();
-                        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putInt("Test", 50);
-                        editor.commit();
 
                         Intent intent = new Intent(getActivity().getApplicationContext(), MyApplicationActivity.class);
                         startActivity(intent);
                     }
-            });
-            return rootView;
+                });
 
-            }
-
-            else {
-                View rootView = inflater.inflate(R.layout.fragment_start_screen, container, false);
                 return rootView;
             }
         }
