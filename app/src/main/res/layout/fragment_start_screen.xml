@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.cornell.jjl.info4130.StartScreen$PlaceholderFragment">
+
+    <TimePicker
+        android:id="@+id/timePicker1"
+        android:theme="@style/myTimePicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What time do you wake up?"
+        android:textSize="25sp"
+        android:layout_below="@id/timePicker1"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

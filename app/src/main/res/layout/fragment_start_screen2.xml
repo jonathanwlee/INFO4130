@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Night"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/main_content"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fitsSystemWindows="true" tools:context="edu.cornell.jjl.info4130.StartScreen">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    tools:context="edu.cornell.jjl.info4130.StartScreen$PlaceholderFragment">
+
+    <TimePicker
+        android:id="@+id/timePicker2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:headerBackground="#1259BD"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What time do you sleep?"
+        android:textSize="25sp"
+        android:layout_below="@id/timePicker2"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
+
+
+    <android.support.design.widget.FloatingActionButton android:id="@+id/fab"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom" android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_dialog_email" />
+</android.support.design.widget.CoordinatorLayout>
