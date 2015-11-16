@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,8 +24,21 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class StartScreen extends AppCompatActivity {
+import com.philips.lighting.hue.listener.PHScheduleListener;
+import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHHueError;
+import com.philips.lighting.model.PHLight;
+import com.philips.lighting.model.PHLightState;
+import com.philips.lighting.model.PHSchedule;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+
+public class StartScreen extends AppCompatActivity {
+    private PHHueSDK phHueSDK;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -52,16 +66,68 @@ public class StartScreen extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        phHueSDK = PHHueSDK.create();
 
+    }
 
-/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    public void scheduleAlarms(int wakeMinute, int wakeHour, int sleepMinute, int sleepHour) {
+
+        PHBridge bridge = PHHueSDK.getInstance().getSelectedBridge();
+        List<String> lightIdentifiers = new ArrayList<String>();
+        List<PHLight> allLights = bridge.getResourceCache().getAllLights();
+
+        for (PHLight light : allLights) {
+            lightIdentifiers.add(light.getIdentifier());
+        }
+
+        bridge.createGroup("Wake", lightIdentifiers, null);
+        PHSchedule wakeSchedule = new PHSchedule("Wake Up");
+        PHLightState lightState = new PHLightState();
+        lightState.setHue(46920);
+
+        Calendar sleepCal = Calendar.getInstance();
+        sleepCal.set(Calendar.SECOND, 0);
+        sleepCal.set(Calendar.MINUTE, sleepMinute);
+        sleepCal.set(Calendar.HOUR_OF_DAY, sleepHour);
+
+        Calendar wakeCal = Calendar.getInstance();
+        wakeCal.set(Calendar.SECOND, 0);
+        wakeCal.set(Calendar.MINUTE, wakeMinute);
+        wakeCal.set(Calendar.HOUR_OF_DAY, wakeHour);
+
+        wakeSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+        wakeSchedule.setLightState(lightState);
+        wakeSchedule.setGroupIdentifier("Wake");
+        wakeSchedule.setLocalTime(true);
+        wakeSchedule.setDate(wakeCal.getTime());
+
+        wakeSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+        wakeSchedule.setLightState(lightState);
+        wakeSchedule.setGroupIdentifier("Sleep");
+        wakeSchedule.setLocalTime(true);
+        wakeSchedule.setDate(sleepCal.getTime());
+
+        bridge.createSchedule(wakeSchedule, new PHScheduleListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onCreated(PHSchedule schedule) {
+                Log.w("Created:", "Ran");
             }
-        });*/
+
+            @Override
+            public void onSuccess() {
+                Log.w("SUCCESS:", "Ran");
+
+            }
+
+            @Override
+            public void onStateUpdate(Map<String,String> successAttribute, List<PHHueError> errorAttribute) {
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+        });
     }
 
     @Override
@@ -121,8 +187,9 @@ public class StartScreen extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private TimePicker wake;
-        private TimePicker sleep;
+        public static TimePicker wake;
+        public static TimePicker sleep;
+
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -161,8 +228,22 @@ public class StartScreen extends AppCompatActivity {
                 startButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        int wakeHour = wake.getCurrentHour();
+                        int wakeMinute = wake.getCurrentMinute();
+                        int sleepHour = sleep.getCurrentHour();
+                        int sleepMinute = sleep.getCurrentMinute();
 
-                        Intent intent = new Intent(getActivity().getApplicationContext(), MyApplicationActivity.class);
+                        SharedPreferences sharedPref = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putInt("wakeHour", wakeHour);
+                        editor.putInt("wakeMinute", wakeMinute);
+                        editor.putInt("sleepHour", sleepHour);
+                        editor.putInt("sleepMinute", sleepMinute);
+                        editor.putBoolean("firstRun", false);
+                        editor.commit();
+
+                        ((StartScreen) getActivity()).scheduleAlarms(wakeMinute,wakeHour,sleepMinute,sleepHour);
+                        Intent intent = new Intent(getActivity().getApplicationContext(), MainScreen.class);
                         startActivity(intent);
                     }
                 });

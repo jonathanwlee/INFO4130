@@ -2,13 +2,6 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\exploded-aar\com.android.support\design\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="19026d31f5d3ae868db81319671a642be5fbba08">
-        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\classes-4b9f544dd2c5ee4256bca67ba6e44cd1d43b7da7.jar" />
-    </item>
-    <item
         jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
@@ -16,46 +9,11 @@
         <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\classes-33e73d6be74a54b1684ae971da497593e7dd916b.jar" />
     </item>
     <item
-        jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\libs\huelocalsdk.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4b1a614771148bb6e955f44722dfdaeb0da11925">
-        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\huelocalsdk-68380337c373bee78f5994549ceb57e2b13153ac.jar" />
-    </item>
-    <item
-        jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
-        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-bef99aa9d32c6029c0e5cf1f229c0845ff77cff8.jar" />
-    </item>
-    <item
-        jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
-        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\classes-d5d0a8ac9ab4f9d601ce5b22c5a0b0372f6e30fd.jar" />
-    </item>
-    <item
         jar="C:\Users\jjl\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="92e3fc113ec3ee36b64603a38857b95700025633">
-        <dex dex="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-7a38a10cc0951e0b3608945bb6e563aa232f8786.jar" />
-    </item>
-    <item
-        jar="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
-        <dex dex="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\pre-dexed\debug\classes-a0c7c45ea0adcfeec747ab0b6577c8ac137f705b.jar" />
-    </item>
-    <item
-        jar="C:\Users\jjl\Documents\INFO4130\app\libs\huesdkresources.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4ab4750a4b01156a5aa3ca6c591d9650424ce70d">
-        <dex dex="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\pre-dexed\debug\huesdkresources-42a1f1e9bad2359224ae395e508c21f2d8ea2e98.jar" />
+        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-7a38a10cc0951e0b3608945bb6e563aa232f8786.jar" />
     </item>
     <item
         jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.0\jars\classes.jar"
@@ -65,18 +23,25 @@
         <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\classes-c90d7066697c0a1fe8633064c72f3573f8dfc52b.jar" />
     </item>
     <item
-        jar="C:\Users\jjl\Documents\INFO4130\app\libs\huelocalsdk.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4b1a614771148bb6e955f44722dfdaeb0da11925">
-        <dex dex="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\pre-dexed\debug\huelocalsdk-e0aa0704181dc6558f66d3dff44c24f32eab8976.jar" />
-    </item>
-    <item
-        jar="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\exploded-aar\com.android.support\design\23.1.0\jars\classes.jar"
+        jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\exploded-aar\com.android.support\design\23.1.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="19026d31f5d3ae868db81319671a642be5fbba08">
-        <dex dex="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\pre-dexed\debug\classes-fb05adca9d4165ee2d9d17288f91122914b3b1a9.jar" />
+        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\classes-4b9f544dd2c5ee4256bca67ba6e44cd1d43b7da7.jar" />
+    </item>
+    <item
+        jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\libs\huelocalsdk.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4b1a614771148bb6e955f44722dfdaeb0da11925">
+        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\huelocalsdk-68380337c373bee78f5994549ceb57e2b13153ac.jar" />
+    </item>
+    <item
+        jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
+        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\classes-d5d0a8ac9ab4f9d601ce5b22c5a0b0372f6e30fd.jar" />
     </item>
     <item
         jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\libs\huesdkresources.jar"
@@ -86,25 +51,11 @@
         <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\huesdkresources-064ff1b25ad635b380a797b4d3bff8302d80ec73.jar" />
     </item>
     <item
-        jar="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3f151e49c316a5ab2c065969a3b3b55ef9b393fc">
-        <dex dex="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\pre-dexed\debug\classes-5806a4dc5067723fa3c42d52caeae5e31b6a1335.jar" />
-    </item>
-    <item
-        jar="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
-        <dex dex="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\pre-dexed\debug\classes-289322ce24d72d2e3149b9dace531eaf807e6e97.jar" />
-    </item>
-    <item
-        jar="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
+        jar="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
-        <dex dex="C:\Users\jjl\Documents\INFO4130\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-586897e06ee2b1fe22be836d8456e081dd88def4.jar" />
+        <dex dex="C:\Users\jjl\Documents\GitHub\INFO4130\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-bef99aa9d32c6029c0e5cf1f229c0845ff77cff8.jar" />
     </item>
 
 </items>

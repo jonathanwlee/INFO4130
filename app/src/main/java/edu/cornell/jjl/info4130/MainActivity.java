@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     // Starting the main activity this way, prevents the PushLink Activity being shown when pressing the back button.
     public void startMainActivity() {
-        Intent intent = new Intent(getApplicationContext(), StartScreen.class);
+        Intent intent = new Intent(getApplicationContext(), MainScreen.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
