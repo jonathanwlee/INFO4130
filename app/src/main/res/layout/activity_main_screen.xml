@@ -6,61 +6,61 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@mipmap/lightplain"
+        android:id="@+id/lightIcon"
+        android:src="@mipmap/lightcolor"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView6"
+        android:id="@+id/sleepIcon"
         android:padding="20dp"
-        android:src="@mipmap/sleepplain"
+        android:src="@mipmap/sleepgray"
         android:layout_gravity="center"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_toStartOf="@+id/imageView" />
+        android:layout_alignTop="@+id/activeIcon"
+        android:layout_toStartOf="@+id/lightIcon" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
+        android:id="@+id/activeIcon"
         android:padding="20dp"
-        android:src="@mipmap/sleepplain"
+        android:src="@mipmap/activegray"
         android:layout_gravity="center"
-        android:layout_above="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
+        android:layout_above="@+id/lightIcon"
+        android:layout_toEndOf="@+id/lightIcon"
         android:layout_marginBottom="53dp" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView4"
+        android:id="@+id/dietIcon"
         android:padding="20dp"
-        android:src="@mipmap/sleepplain"
+        android:src="@mipmap/dietgray"
         android:layout_gravity="center"
         android:layout_marginTop="46dp"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/lightIcon"
         android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
+        android:id="@+id/showerIcon"
         android:padding="20dp"
-        android:src="@mipmap/sleepplain"
+        android:src="@mipmap/showergray"
         android:layout_gravity="center"
-        android:layout_alignBottom="@+id/imageView4"
+        android:layout_alignBottom="@+id/dietIcon"
         android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView5"
+        android:id="@+id/groupIcon"
         android:padding="20dp"
-        android:src="@mipmap/sleepplain"
+        android:src="@mipmap/groupgray"
         android:layout_gravity="center"
-        android:layout_alignBottom="@+id/imageView3"
+        android:layout_alignBottom="@+id/showerIcon"
         android:layout_alignParentEnd="true" />
 
 
