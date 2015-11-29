@@ -15,7 +15,6 @@ import com.philips.lighting.hue.sdk.PHAccessPoint;
 /**
  * This class provides adapter view for a list of Found Bridges.
  * 
- * @author SteveyO.
  */
 public class AccessPointListAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
@@ -24,7 +23,6 @@ public class AccessPointListAdapter extends BaseAdapter {
     /**
      * View holder class for access point list.
      * 
-     * @author SteveyO.
      */
     class BridgeListItem {
         private TextView bridgeIp;

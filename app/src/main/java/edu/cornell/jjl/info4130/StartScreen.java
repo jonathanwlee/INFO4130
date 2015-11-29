@@ -3,6 +3,7 @@ package edu.cornell.jjl.info4130;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,9 +25,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.philips.lighting.hue.listener.PHBridgeConfigurationListener;
 import com.philips.lighting.hue.listener.PHScheduleListener;
+import com.philips.lighting.hue.listener.PHTimeZoneListener;
 import com.philips.lighting.hue.sdk.PHHueSDK;
 import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHBridgeConfiguration;
 import com.philips.lighting.model.PHHueError;
 import com.philips.lighting.model.PHLight;
 import com.philips.lighting.model.PHLightState;
@@ -36,10 +40,80 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class StartScreen extends AppCompatActivity {
     private PHHueSDK phHueSDK;
-    /**
+    private PHSchedule wakeSchedule; //Only one Wake Schedule is shown
+    private PHSchedule sleepSchedule1; //First Sleep Schedule that is shown
+    private PHSchedule sleepSchedule2; //Second Sleep Schedule that is shown subsequent
+    private PHBridge bridge;
+    private PHLightState wakeColor,transitionToSleepColor,transitiontoSleepDim;
+
+    private PHBridgeConfigurationListener bridgeConfigListener = new PHBridgeConfigurationListener() {
+        @Override
+        public void onReceivingConfiguration(PHBridgeConfiguration phBridgeConfiguration) {
+
+        }
+
+        @Override
+        public void onSuccess() {
+            Log.w("SUCCESS: ", "on Success");
+        }
+
+        @Override
+        public void onError(int i, String s) {
+            Log.w("ERROR: ", "Bridge Config Error");
+        }
+
+        @Override
+        public void onStateUpdate(Map<String, String> map, List<PHHueError> list) {
+
+        }
+    };
+
+    private PHScheduleListener bridgeListener = new PHScheduleListener() {
+        @Override
+        public void onCreated(PHSchedule schedule) {
+            Log.w("Created:", "Schedule Name:  " + schedule.getName());
+            Log.w("Created:", "Schedule Identifier:  " + schedule.getIdentifier());
+
+        }
+
+        @Override
+        public void onSuccess() {
+            Log.w("On Success:", "on Success Ran");
+
+        }
+
+        @Override
+        public void onStateUpdate(Map<String,String> successAttribute, List<PHHueError> errorAttribute) {
+            Log.w("On Updated: ", "State has Been Updated.");
+
+        }
+
+        @Override
+        public void onError(int i, String s) {
+            Log.w("on Error Message: ", s);
+        }
+    };
+
+    private PHTimeZoneListener timeZoneListener = new PHTimeZoneListener() {
+
+
+        @Override
+        public void onSuccess(List<String> list) {
+            for (String t : list) {
+
+            }
+        }
+
+        @Override
+        public void onError(String s) {
+
+        }
+    };
+        /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
@@ -53,6 +127,7 @@ public class StartScreen extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    public static Typeface ralewayFont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +142,15 @@ public class StartScreen extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         phHueSDK = PHHueSDK.create();
-
+        initBridgeSettings();
+        initLightStates();
+        ralewayFont = Typeface.createFromAsset(getAssets(), "fonts/Raleway-Regular.ttf");
     }
-
-    public void scheduleAlarms(int wakeMinute, int wakeHour, int sleepMinute, int sleepHour) {
-
-        PHBridge bridge = PHHueSDK.getInstance().getSelectedBridge();
+    /*
+    * Inits Bridge Settings: Lights, Timezone.
+    * */
+    public void initBridgeSettings() {
+        bridge = PHHueSDK.getInstance().getSelectedBridge();
         List<String> lightIdentifiers = new ArrayList<String>();
         List<PHLight> allLights = bridge.getResourceCache().getAllLights();
 
@@ -80,54 +158,112 @@ public class StartScreen extends AppCompatActivity {
             lightIdentifiers.add(light.getIdentifier());
         }
 
-        bridge.createGroup("Wake", lightIdentifiers, null);
-        PHSchedule wakeSchedule = new PHSchedule("Wake Up");
-        PHLightState lightState = new PHLightState();
-        lightState.setHue(46920);
+        bridge.createGroup("Lights", lightIdentifiers, null);
+        bridge.getSupportedTimeZones(timeZoneListener);
 
-        Calendar sleepCal = Calendar.getInstance();
-        sleepCal.set(Calendar.SECOND, 0);
-        sleepCal.set(Calendar.MINUTE, sleepMinute);
-        sleepCal.set(Calendar.HOUR_OF_DAY, sleepHour);
+        PHBridgeConfiguration config = new PHBridgeConfiguration();
+        config.setTimeZone("EST");
+        bridge.updateBridgeConfigurations(config, bridgeConfigListener);
+    }
 
-        Calendar wakeCal = Calendar.getInstance();
-        wakeCal.set(Calendar.SECOND, 0);
-        wakeCal.set(Calendar.MINUTE, wakeMinute);
-        wakeCal.set(Calendar.HOUR_OF_DAY, wakeHour);
+    /*
+    * WakeColor: Blue. Set Light On.
+    * TransitionToSleepColor: Sets Transition Time to Red.
+    * TransitionToSleepDim: Sets Transition to Brightness of 0.
+    * */
+    public void initLightStates() {
+        wakeColor = new PHLightState();
+        wakeColor.setHue(46920);
+        wakeColor.setOn(true);
 
+        transitionToSleepColor = new PHLightState();
+        transitionToSleepColor.setTransitionTime(18000);
+        transitionToSleepColor.setHue(300);
+
+        transitiontoSleepDim = new PHLightState();
+        transitiontoSleepDim.setTransitionTime(18000);
+        transitiontoSleepDim.setBrightness(0);
+
+    }
+
+    public void scheduleAlarms(int wakeMinute, int wakeHour, int sleepMinute, int sleepHour) {
+
+        wakeSchedule = new PHSchedule("Wake Alarm","WakeSchedule");
+        sleepSchedule1 = new PHSchedule("Sleep Alarm 1st","SleepSchedule1");
+        sleepSchedule2 = new PHSchedule("Sleep Alarm 2nd","SleepSchedule2");
+
+        //Init Alarm Times.
+        Calendar wakeColorTime = Calendar.getInstance();
+        wakeColorTime.set(Calendar.SECOND, 1);
+        wakeColorTime.set(Calendar.MINUTE, wakeMinute);
+        wakeColorTime.set(Calendar.HOUR_OF_DAY, wakeHour);
+
+        Calendar sleepCalColorTransition = Calendar.getInstance();
+        sleepCalColorTransition.set(Calendar.SECOND, 1);
+        sleepCalColorTransition.set(Calendar.MINUTE, sleepMinute);
+        sleepCalColorTransition.set(Calendar.HOUR_OF_DAY, sleepHour);
+
+        Calendar sleepCalDimTransition = Calendar.getInstance();
+        sleepCalDimTransition.set(Calendar.SECOND, 30);
+
+        int sleepMinuteMod;
+        int sleepHourMod;
+        //Fixes any errors with 24 hour time.
+        if (sleepMinute +35 > 59) {
+            sleepMinuteMod = (sleepMinute + 35) % 60;
+            if (sleepHour+1 < 24) {
+                sleepHourMod = sleepHour+1;
+            }
+            else {
+                sleepHourMod= 0;
+            }
+        }
+        else {
+            sleepHourMod = sleepHour;
+            sleepMinuteMod = sleepMinute + 35;
+        }
+
+        sleepCalDimTransition.set(Calendar.MINUTE, sleepMinuteMod);
+        sleepCalDimTransition.set(Calendar.HOUR_OF_DAY, sleepHourMod);
+
+        /*
+        * This section of code initializes the wake and sleep schedules.
+        * WakeSchedule: Sets to Blue Light upon alarm in the morning.
+        * SleepSchedule1: Transitions Light towards Red Progrssively.
+        * SleepSchedule2: Transitions Light towards Brightness of 0.
+        * */
         wakeSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
-        wakeSchedule.setLightState(lightState);
-        wakeSchedule.setGroupIdentifier("Wake");
+        wakeSchedule.setLightState(wakeColor);
+        wakeSchedule.setGroupIdentifier("Lights");
         wakeSchedule.setLocalTime(true);
-        wakeSchedule.setDate(wakeCal.getTime());
+        wakeSchedule.setDate(wakeColorTime.getTime());
 
-        wakeSchedule.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
-        wakeSchedule.setLightState(lightState);
-        wakeSchedule.setGroupIdentifier("Sleep");
-        wakeSchedule.setLocalTime(true);
-        wakeSchedule.setDate(sleepCal.getTime());
+        sleepSchedule1.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+        sleepSchedule1.setLightState(transitionToSleepColor);
+        sleepSchedule1.setGroupIdentifier("Lights");
+        sleepSchedule1.setLocalTime(true);
+        sleepSchedule1.setDate(sleepCalColorTransition.getTime());
 
-        bridge.createSchedule(wakeSchedule, new PHScheduleListener() {
-            @Override
-            public void onCreated(PHSchedule schedule) {
-                Log.w("Created:", "Ran");
-            }
+        sleepSchedule2.setRecurringDays(PHSchedule.RecurringDay.RECURRING_ALL_DAY.getValue());
+        sleepSchedule2.setLightState(transitiontoSleepDim);
+        sleepSchedule2.setGroupIdentifier("Lights");
+        sleepSchedule2.setLocalTime(true);
+        sleepSchedule2.setTimer(700);
+        sleepSchedule2.setDate(sleepCalDimTransition.getTime());
 
-            @Override
-            public void onSuccess() {
-                Log.w("SUCCESS:", "Ran");
+        Map<String,PHSchedule> bridgeSchedules = bridge.getResourceCache().getSchedules();
 
-            }
+        if(bridgeSchedules.isEmpty()) {
+            bridge.createSchedule(wakeSchedule, bridgeListener);
+            bridge.createSchedule(sleepSchedule1, bridgeListener);
+            bridge.createSchedule(sleepSchedule2, bridgeListener);
+        }
 
-            @Override
-            public void onStateUpdate(Map<String,String> successAttribute, List<PHHueError> errorAttribute) {
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
-            }
-        });
+        else {
+            bridge.updateSchedule(wakeSchedule, bridgeListener);
+            bridge.updateSchedule(sleepSchedule1, bridgeListener);
+            bridge.updateSchedule(sleepSchedule2, bridgeListener);
+        }
     }
 
     @Override
@@ -166,57 +302,64 @@ public class StartScreen extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            // Return a StartScreenFragment (defined as a static inner class below).
+            return StartScreenFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         }
 
     /**
-     * A placeholder fragment containing a simple view.
+     * A placeholder fragment containing our view.
      */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+    public static class StartScreenFragment extends Fragment {
         private static final String ARG_SECTION_NUMBER = "section_number";
         public static TimePicker wake;
         public static TimePicker sleep;
-
+        public static TextView wakeText,sleepText,continueText,startScreenText;
 
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static StartScreenFragment newInstance(int sectionNumber) {
+            StartScreenFragment fragment = new StartScreenFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
         }
 
-        public PlaceholderFragment() {
+        public StartScreenFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                View rootView = inflater.inflate(R.layout.fragment_start_screen, container, false);
-                wake = (TimePicker) rootView.findViewById(R.id.timePicker1);
+                View rootView = inflater.inflate(R.layout.fragment_start_screen0, container, false);
+                startScreenText = (TextView) rootView.findViewById(R.id.startScreenText);
+                startScreenText.setTypeface(((StartScreen) getActivity()).ralewayFont);
                 return rootView;
             }
+
             else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
+                View rootView = inflater.inflate(R.layout.fragment_start_screen, container, false);
+                wake = (TimePicker) rootView.findViewById(R.id.timePicker1);
+                wakeText = (TextView) rootView.findViewById(R.id.wakeText);
+                wakeText.setTypeface(((StartScreen) getActivity()).ralewayFont);
+                return rootView;
+            }
+            else if (getArguments().getInt(ARG_SECTION_NUMBER) == 3) {
                 View rootView = inflater.inflate(R.layout.fragment_start_screen2, container, false);
                 sleep = (TimePicker) rootView.findViewById(R.id.timePicker2);
+                sleepText = (TextView) rootView.findViewById(R.id.sleepText);
+                sleepText.setTypeface(((StartScreen) getActivity()).ralewayFont);
 
             return rootView;
             }
@@ -225,6 +368,8 @@ public class StartScreen extends AppCompatActivity {
                 View rootView = inflater.inflate(R.layout.fragment_start_screen3, container, false);
 
                 Button startButton = (Button) rootView.findViewById(R.id.startButton);
+
+                startButton.setTypeface(((StartScreen) getActivity()).ralewayFont);
                 startButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -233,16 +378,18 @@ public class StartScreen extends AppCompatActivity {
                         int sleepHour = sleep.getCurrentHour();
                         int sleepMinute = sleep.getCurrentMinute();
 
-                        SharedPreferences sharedPref = getActivity().getSharedPreferences("test",Context.MODE_PRIVATE);
+                        //Store Preferences.
+                        SharedPreferences sharedPref = getActivity().getSharedPreferences("test", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.putInt("wakeHour", wakeHour);
                         editor.putInt("wakeMinute", wakeMinute);
                         editor.putInt("sleepHour", sleepHour);
                         editor.putInt("sleepMinute", sleepMinute);
                         editor.putBoolean("firstRun", false);
+
                         editor.commit();
 
-                        ((StartScreen) getActivity()).scheduleAlarms(wakeMinute,wakeHour,sleepMinute,sleepHour);
+                        ((StartScreen) getActivity()).scheduleAlarms(wakeMinute, wakeHour, sleepMinute, sleepHour);
                         Intent intent = new Intent(getActivity().getApplicationContext(), MainScreen.class);
                         startActivity(intent);
                     }

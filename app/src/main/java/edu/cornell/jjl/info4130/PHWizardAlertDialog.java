@@ -9,7 +9,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.view.WindowManager;
 
 /**
- * Generic class for Alert and Progress dialogs wizard
+ * Generic class for Phillips Hue Alert and Progress dialogs wizard
  * 
  * 
  */

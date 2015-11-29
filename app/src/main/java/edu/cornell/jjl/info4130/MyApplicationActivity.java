@@ -46,9 +46,6 @@ public class MyApplicationActivity extends Activity {
             List<PHLight> allLights = bridge.getResourceCache().getAllLights();
             for (PHLight light : allLights) {
                 PHLightState lightState = new PHLightState();
-                Log.w("BRI: ",Integer.toString(lightState.getBrightness()));
-                Log.w("SAT: ",Integer.toString(lightState.getSaturation()));
-                Log.w("HUE: ", Integer.toString(lightState.getHue()));
             }
 
             handler.postDelayed(this,100);
