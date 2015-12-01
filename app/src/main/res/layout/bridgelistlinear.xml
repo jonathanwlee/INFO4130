@@ -33,7 +33,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:singleLine="true"
-        android:text="SmartBridgddde"
+        android:text="Setup your Bridge!"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#000" />
 

@@ -39,8 +39,9 @@ import java.util.Map;
  */
 public class MainScreen extends Activity{
     private PHHueSDK phHueSDK;
+    private PHBridge bridge;
     private static final int MAX_HUE=65535;
-    public static final String TAG = "QuickStart";
+    public static final String TAG = "Health and Computation";
     private ImageView lightIcon,sleepIcon,dietIcon,activityIcon,showerIcon,groupIcon;
     private Typeface ralewayFont;
     private boolean activityRunning;
@@ -53,7 +54,8 @@ public class MainScreen extends Activity{
         super.onCreate(savedInstanceState);
         setTitle(R.string.app_name);
         setContentView(R.layout.activity_main_screen);
-        //phHueSDK = PHHueSDK.create();
+        phHueSDK = PHHueSDK.create();
+        bridge = phHueSDK.getSelectedBridge();
 
         SharedPreferences sharedPref = getSharedPreferences("test", Context.MODE_PRIVATE);
         //boolean firstRun = sharedPref.getBoolean("firstRun", false);
@@ -76,9 +78,29 @@ public class MainScreen extends Activity{
     public void dimLights() {
     }
 
+    public void setLights(int hue,boolean on) {
+        if (on) {
+            score=score+5000;
+
+        }
+        else {
+            score=score-5000;
+        }
+        PHLightState lightState = new PHLightState();
+        List<PHLight> allLights = bridge.getResourceCache().getAllLights();
+        for (PHLight light : allLights) {
+            lightState.setHue(score+5000);
+            lightState.setBrightness(100);
+            lightState.setSaturation(100);
+            bridge.updateLightState(light, lightState);
+            Log.w("Hue Score: ", Integer.toString(score));
+        }
+    }
+
     protected void onPause() {
         super.onPause();
         activityRunning=false;
+        finish();
     }
 
     @Override
@@ -115,6 +137,7 @@ public class MainScreen extends Activity{
                 Intent intent = new Intent(getApplicationContext(), StartScreen.class);
                 startActivity(intent);
 
+
             }
         });
 
@@ -124,10 +147,14 @@ public class MainScreen extends Activity{
                 if(sleepOn) {
                 sleepIcon.setImageResource(R.mipmap.sleepgray);
                     sleepOn=false;
-            }
+                    setLights(score,false);
+
+                }
                 else {
                     sleepIcon.setImageResource(R.mipmap.sleepcolor);
                     sleepOn=true;
+                    setLights(score,true);
+
                 }
                 }
         });
@@ -138,10 +165,13 @@ public class MainScreen extends Activity{
                 if(groupOn) {
                     groupIcon.setImageResource(R.mipmap.groupgray);
                     groupOn=false;
+                    setLights(score,false);
                 }
                 else {
                     groupIcon.setImageResource(R.mipmap.groupcolor);
                     groupOn=true;
+                    setLights(score,true);
+
                 }
             }
         });
@@ -151,10 +181,23 @@ public class MainScreen extends Activity{
                 if(activityOn) {
                     activityIcon.setImageResource(R.mipmap.activegray);
                     activityOn=false;
+                    setLights(score,false);
+
                 }
                 else {
                     activityIcon.setImageResource(R.mipmap.activecolor);
                     activityOn=true;
+                    //setLights(score,true);
+                    PHLightState lightState = new PHLightState();
+                    List<PHLight> allLights = bridge.getResourceCache().getAllLights();
+                    for (PHLight light : allLights) {
+                        lightState.setHue(56100);
+                        lightState.setBrightness(90);
+                        lightState.setSaturation(100);
+                        bridge.updateLightState(light,lightState);
+                    }
+
+
                 }
             }
         });
@@ -164,10 +207,14 @@ public class MainScreen extends Activity{
                 if(showerOn) {
                     showerIcon.setImageResource(R.mipmap.showergray);
                     showerOn=false;
+                    setLights(score,false);
+
                 }
                 else {
                     showerIcon.setImageResource(R.mipmap.showercolor);
                     showerOn=true;
+                    setLights(score,true);
+
                 }
             }
         });
@@ -178,10 +225,14 @@ public class MainScreen extends Activity{
                 if(dietOn) {
                     dietIcon.setImageResource(R.mipmap.dietgray);
                     dietOn=false;
+                    setLights(score,false);
+
                 }
                 else {
                     dietIcon.setImageResource(R.mipmap.dietcolor);
                     dietOn=true;
+                    setLights(score,true);
+
                 }
             }
         });

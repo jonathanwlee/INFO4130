@@ -171,7 +171,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         PHWizardAlertDialog.showErrorDialog(MainActivity.this, message, R.string.btn_ok);
                     }
                 });
-
             }
             else if (code == PHMessageType.BRIDGE_NOT_FOUND) {
 
